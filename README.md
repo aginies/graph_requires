@@ -10,7 +10,7 @@ If you are using some extra repository this can report false result compare to a
 git clone https://github.com/aginies/graph_requires.git
 cd graph_requires
 chmod 755 graph_requires.py
-./graph_requires.py PACKAGE_NAME
+./graph_requires.py PACKAGE_NAME [OPTIONNAL_DIRECTORY]
 ```
 
 # Example
@@ -40,8 +40,8 @@ check deps of openQA-devel
 check deps of os-autoinst-qemu-kvm
 check deps of os-autoinst-qemu-x86
 check deps of qemu-tools
-DOT file 'qemu-tools.dot' generated successfully.
-Image file 'qemu-tools.jpg' generated successfully.
+DOT file '/tmp/graph/qemu-tools.dot' generated successfully.
+Image file '/tmp/graph/qemu-tools.jpg' generated successfully.
 ```
 
 ![image](https://github.com/aginies/graph_requires/blob/343637c8f144036901b734c2c323a2945dd674c5/examples/qemu-tools.jpg)
