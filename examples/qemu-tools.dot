@@ -1,0 +1,24 @@
+digraph PackageDependencies {
+graph [label="Requires qemu-tools - SUSE Linux Enterprise Server 15 SP6 (2024-07-03)", layout=fdp, fontsize=32, fontname="Arial"];
+node [shape=box, style=filled, fillcolor=lightgreen];
+"qemu-tools" [shape=circle, style=filled, fillcolor=lightblue];
+edge [arrowhead=vee];
+"kiwi-image-oem-requires" [shape=ellipse, style=filled, fillcolor=pink];
+"kiwi-image-oem-requires" -> "kiwi-systemdeps-filesystems" -> "qemu-tools";
+"kiwi-image-pxe-requires" [shape=ellipse, style=filled, fillcolor=pink];
+"kiwi-image-pxe-requires" -> "kiwi-systemdeps-filesystems";
+"kiwi-image-vmx-requires" [shape=ellipse, style=filled, fillcolor=pink];
+"kiwi-image-vmx-requires" -> "kiwi-systemdeps-filesystems";
+"kiwi-systemdeps" [shape=ellipse, style=filled, fillcolor=pink];
+"kiwi-systemdeps" -> "kiwi-systemdeps-filesystems";
+"kiwi-systemdeps-disk-images" [shape=ellipse, style=filled, fillcolor=pink];
+"kiwi-systemdeps-disk-images" -> "kiwi-systemdeps-filesystems";
+"kiwi-systemdeps-iso-media" [shape=ellipse, style=filled, fillcolor=pink];
+"kiwi-systemdeps-iso-media" -> "kiwi-systemdeps-filesystems";
+"libguestfs" [shape=ellipse, style=filled, fillcolor=pink];
+"libguestfs" -> "libguestfs-appliance" -> "qemu-tools";
+"live-usb-gui" [shape=ellipse, style=filled, fillcolor=pink];
+"live-usb-gui" -> "live-fat-stick" -> "qemu-tools";
+"openQA-devel" [shape=ellipse, style=filled, fillcolor=pink];
+"openQA-devel" -> "os-autoinst-devel" -> "qemu-tools";
+}
