@@ -48,9 +48,35 @@ Image file '/tmp/graph/qemu-tools.jpg' generated successfully.
 
 # container
 
+Build the container:
 ```shell
 ./graph-container-manage.sh build
+1. openSUSE Leap 15.5
+2. openSUSE Leap 15.6
+3. openSUSE Tumbleweed
+Enter your OS choice [1-3]: 2
+STEP 1/23: FROM opensuse/leap:15.6
+STEP 2/23: LABEL Description="Graph requires Container"
+..............
+```
+
+Use it:
+```shell
 ./graph-container-manage.sh run
+localhost/graph-opensuse/leap        15.6        0e77c8ce4c3d  12 minutes ago  204 MB
+Enter the container ID: 0e77c8ce4c3d
+Enter the package name: qemu
+
+Generate a graph of all packages that require any of the provides of a package.
+This use zypper on current system, so using the actual Repositories set on the system.
+check deps of diskimage-builder
+check deps of docker-img-store-setup
+check deps of gnome-boxes
+check deps of gnome-boxes-lang
+.....
+check deps of xen-tools
+DOT file '/tmp/graph/qemu.dot' generated successfully.
+Image file '/tmp/graph/qemu.jpg' generated successfully.
 ```
 
 # Licence

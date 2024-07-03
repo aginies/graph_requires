@@ -1,6 +1,6 @@
 #!/bin/bash
 # aginies@suse.com
-# quick script to manage the container
+# quick script to manage/use the container
 
 function check_command() {
     if ! command -v "$1" &> /dev/null; then
@@ -72,7 +72,7 @@ EOF
 
 echo "
 First ARG is mandatory:
-$0 [run|stop|rmcache|bash|logs|build]
+$0 [build|run|rmcache]
 
 
 USAGE:
@@ -80,21 +80,11 @@ USAGE:
 run
     podman run container
 
-stop
-    stop the container
+build
+    build a local image of this container
 
 rmcache
     remove the container image in cache
-
-bash 
-    go with bash command inside the container
-
-DEBUG:
-logs
-    see log of the container
-
-build
-    build a local image of this container
  "
 }
 
@@ -106,10 +96,6 @@ check_command podman
 
 plop=$1
 case $plop in
-    stop)
-	podman ps | grep graph
-	echo " podman stop CONTAINER_ID"
-    ;;
     run)
 	podman images | grep graph
 	read -p "Enter the container ID: " containerid
@@ -119,15 +105,6 @@ case $plop in
     rmcache)
 	podman images | grep graph
 	echo " podman rmi -f IMAGE"
-    ;;
-    logs)
-	podman images | grep graph	
-	echo " podman logs CONTAINER_ID"
-    ;;
-    bash)
-	set +e
-	podman ps | grep graph
-	echo " podman exec -ti CONTAINER_ID COMMAND bash"
     ;;
     build)
 	build_container	   
