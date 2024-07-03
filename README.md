@@ -6,8 +6,13 @@ If you are using some extra repository this can report false result compare to a
 
 # Usage
 
+First clone this repo:
 ```shell
 git clone https://github.com/aginies/graph_requires.git
+```
+
+Get the script executable and use it on your system:
+```shell
 cd graph_requires
 chmod 755 graph_requires.py
 ./graph_requires.py PACKAGE_NAME [OPTIONNAL_DIRECTORY]
@@ -46,7 +51,9 @@ Image file '/tmp/graph/qemu-tools.jpg' generated successfully.
 
 ![image](https://github.com/aginies/graph_requires/blob/343637c8f144036901b734c2c323a2945dd674c5/examples/qemu-tools.jpg)
 
-# container
+# Container
+
+This provide you a clean environement to check you requires.
 
 Build the container:
 ```shell
