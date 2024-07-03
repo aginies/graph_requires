@@ -11,7 +11,7 @@ First clone this repo:
 git clone https://github.com/aginies/graph_requires.git
 ```
 
-Get the script executable and use it on your system:
+Switch the script to executable and use it on your system:
 ```shell
 cd graph_requires
 chmod 755 graph_requires.py
