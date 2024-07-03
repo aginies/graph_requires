@@ -7,6 +7,9 @@ If you are using some extra repository this can report false result compare to a
 # Usage
 
 ```shell
+git clone https://github.com/aginies/graph_requires.git
+cd graph_requires
+chmod 755 graph_requires.py
 ./graph_requires.py PACKAGE_NAME
 ```
 
