@@ -7,7 +7,8 @@ If you are using some extra repository this can report false result compare to a
 # Usage
 
 ```shell
-./graph_requires.py PACKAGE_NAME```
+./graph_requires.py PACKAGE_NAME
+```
 
 # Example
 
@@ -37,7 +38,8 @@ check deps of os-autoinst-qemu-kvm
 check deps of os-autoinst-qemu-x86
 check deps of qemu-tools
 DOT file 'qemu-tools.dot' generated successfully.
-Image file 'qemu-tools.jpg' generated successfully.```
+Image file 'qemu-tools.jpg' generated successfully.
+```
 
 ![image](https://github.com/aginies/graph_requires/blob/343637c8f144036901b734c2c323a2945dd674c5/examples/qemu-tools.jpg)
 
