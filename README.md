@@ -3,6 +3,7 @@
 Generate a graph of all packages that require any of the provides of a package (SUSE/openSUSE).
 This use zypper on current system, so its using the actual Repositories set on the system.
 If you are using some extra repository this can report false result compare to an '''official''' installation.
+To avoid any false result it is recommended to use the container way.
 
 # Usage
 
