@@ -46,6 +46,13 @@ Image file '/tmp/graph/qemu-tools.jpg' generated successfully.
 
 ![image](https://github.com/aginies/graph_requires/blob/343637c8f144036901b734c2c323a2945dd674c5/examples/qemu-tools.jpg)
 
+# container
+
+```shell
+./graph-container-manage.sh build
+./graph-container-manage.sh run
+```
+
 # Licence
 
 GPL V3
