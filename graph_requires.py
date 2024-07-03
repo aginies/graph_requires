@@ -111,11 +111,11 @@ def check_seen_before(filename, pattern):
         print(f"The file '{filename}' does not exist.")
 
 
-def generate_dot_file(deps, package_n, filename="dependencies.dot"):
+def generate_dot_file(deps, package_n, filename="dependencies.dot", directory="/tmp/graph"):
     """
     Generate a DOT file from the package dependencies.
     """
-    filename = filename+".dot"
+    filename = directory +"/"+ filename+".dot"
     with open(filename, "w") as dotf:
         dotf.write("digraph PackageDependencies {\n")
         osrelease = get_pretty_name()
@@ -156,15 +156,15 @@ def generate_dot_file(deps, package_n, filename="dependencies.dot"):
     dotf.close()
     print(f"DOT file '{filename}' generated successfully.")
 
-def generate_image(filename="dependencies", extension="jpg"):
+def generate_image(filename="dependencies", extension="jpg", directory="/tmp/graph"):
     """
     generate the image file
     the py graphviz package in not available on SLES for py3.6
     so keeping it by command line
     """
-    image_filename = filename + "." + extension
+    image_filename = directory+"/" + filename + "." + extension
     try:
-        command = ["dot", "-T"+extension, filename+".dot", "-o", image_filename]
+        command = ["dot", "-T"+extension, directory+"/"+filename+".dot", "-o", image_filename]
         result = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         _output, _error = result.communicate()
 
@@ -186,10 +186,16 @@ if __name__ == "__main__":
     print("This use zypper on current system, so using the actual Repositories set on the system.\n")
 
     if len(sys.argv) < 2:
-        print("Usage: python3 graph.py package_name1")
+        print("Usage: python3 graph.py PACKAGE_NAME")
         sys.exit(1)
     PACKAGE_NAME = sys.argv[1].strip()
-#    PACKAGE_NAME = input("\nEnter package name: ").strip()
+
+    if len(sys.argv) > 2:
+        wdir = sys.argv[2].strip()
+        if not os.path.exists(wdir):
+            os.makedirs(wdir)
+    else:
+        wdir = "/tmp/graph"
 
     if not PACKAGE_NAME:
         print("Please enter a valid package name.")
@@ -198,7 +204,7 @@ if __name__ == "__main__":
     DEPENDENCIES_ALL = get_package_dependencies(PACKAGE_NAME)
 
     if DEPENDENCIES_ALL:
-        generate_dot_file(DEPENDENCIES_ALL, PACKAGE_NAME, filename=PACKAGE_NAME)
-        generate_image(filename=PACKAGE_NAME, extension="jpg")
+        generate_dot_file(DEPENDENCIES_ALL, PACKAGE_NAME, filename=PACKAGE_NAME, directory=wdir)
+        generate_image(filename=PACKAGE_NAME, extension="jpg", directory=wdir)
     else:
         print(f"No dependencies found for '{PACKAGE_NAME}'.")
