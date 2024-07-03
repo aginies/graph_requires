@@ -54,7 +54,7 @@ Image file '/tmp/graph/qemu-tools.jpg' generated successfully.
 
 # Container
 
-This provide you a clean environement to check you requires.
+This provide you a clean environement to check requires.
 
 Build the container:
 ```shell
