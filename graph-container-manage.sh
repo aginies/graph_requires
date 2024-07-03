@@ -13,12 +13,13 @@ DATA=/tmp/graph
 
 run_container() {
 containerid=$1
+PACKAGE=$2
 mkdir ${DATA}
 podman run \
     --name graph \
     --rm -ti \
     --volume ${DATA}:${DATA} \
-    ${containerid}
+    ${containerid} ${PACKAGE}
 }
 
 build_container() {
@@ -112,7 +113,8 @@ case $plop in
     run)
 	podman images | grep graph
 	read -p "Enter the container ID: " containerid
-	run_container ${containerid}
+	read -p "Enter the package name: " PACKAGE
+	run_container ${containerid} ${PACKAGE}
     ;;
     rmcache)
 	podman images | grep graph

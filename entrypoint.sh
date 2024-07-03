@@ -1,4 +1,3 @@
 #!/bin/sh
 # loop forever
-sleep infinity
-
+/container/graph_requires.py $1

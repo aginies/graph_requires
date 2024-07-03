@@ -11,6 +11,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 import sys
 import shutil
+import os
 from datetime import date
 
 def cmd_exists(cmd):
@@ -191,20 +192,21 @@ if __name__ == "__main__":
     PACKAGE_NAME = sys.argv[1].strip()
 
     if len(sys.argv) > 2:
-        wdir = sys.argv[2].strip()
-        if not os.path.exists(wdir):
-            os.makedirs(wdir)
+        WDIR = sys.argv[2].strip()
+        if not os.path.exists(WDIR):
+            os.makedirs(WDIR)
     else:
-        wdir = "/tmp/graph"
+        WDIR = "/tmp/graph"
 
     if not PACKAGE_NAME:
         print("Please enter a valid package name.")
         exit(1)
 
+    print(f"Working with package {PACKAGE_NAME}")
     DEPENDENCIES_ALL = get_package_dependencies(PACKAGE_NAME)
 
     if DEPENDENCIES_ALL:
-        generate_dot_file(DEPENDENCIES_ALL, PACKAGE_NAME, filename=PACKAGE_NAME, directory=wdir)
-        generate_image(filename=PACKAGE_NAME, extension="jpg", directory=wdir)
+        generate_dot_file(DEPENDENCIES_ALL, PACKAGE_NAME, filename=PACKAGE_NAME, directory=WDIR)
+        generate_image(filename=PACKAGE_NAME, extension="jpg", directory=WDIR)
     else:
         print(f"No dependencies found for '{PACKAGE_NAME}'.")
