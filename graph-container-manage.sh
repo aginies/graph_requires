@@ -60,25 +60,30 @@ fi
 
 case $choice in
 	1)
-	OS="opensuse/leap:15.5"
+	OSREG="opensuse/leap:15.5"
 	PACKAGETOI="graphviz-gd"
+	OS="leap-15.5"
 	;;
 	2)
-	OS="opensuse/leap:15.6"
+	OSREG="opensuse/leap:15.6"
 	PACKAGETOI="graphviz-gd"
+	OS="leap-15.6"
 	;;
 	3)
-	OS="opensuse/tumbleweed"
+	OSREG="opensuse/tumbleweed"
 	PACKAGETOI="graphviz-gd"
+	OS="tumbleweed"
 	;;
 	4)
-	OS="bci/bci-base:15.5"
+	OSREG="bci/bci-base:15.5"
 	PACKAGETOI="suseconnect-ng"
+	OS="sles15-sp5"
 	check_sles
 	;;
 	5)
-	OS="bci/bci-base:15.6"
+	OSREG="bci/bci-base:15.6"
 	PACKAGETOI="suseconnect-ng"
+	OS="sles15-sp6"
 	check_sles
 	;;
 	*)
@@ -88,7 +93,7 @@ case $choice in
 esac
 
 podman build \
-       	--build-arg="OS=${OS}" \
+	--build-arg="OSREG=${OSREG}" \
 	--build-arg="PACKAGETOI=${PACKAGETOI}" \
 	--tag graph-${OS} .
 }
@@ -132,9 +137,12 @@ case ${plop} in
 	read -p "Enter the package name: " PACKAGE
 	run_container ${containerid} ${PACKAGE}
 	# if this a SLES, jpg can not be generated, fixing this locally
+	OS=`podman images | awk -v id="${containerid}" 'NR>1 && $3==id { split($1, parts, "/"); repo_name = parts[length(parts)]; print repo_name; exit }'`
 	if [ ! -e "${DATA}/${PACKAGE}.jpg" ]; then
-		echo "Generating image ${DATA}/${PACKAGE}.jpg locally"
-		dot -Tjpg ${DATA}/${PACKAGE}.dot -o ${DATA}/${PACKAGE}.jpg
+		echo "Generating image ${DATA}/${PACKAGE}_${OS}.jpg locally"
+		dot -Tjpg ${DATA}/${PACKAGE}.dot -o ${DATA}/${PACKAGE}_${OS}.jpg
+	else
+		echo "${DATA}/${PACKAGE}_${OS}.jpg already exist.... exiting"
 	fi
     ;;
     rmcache)

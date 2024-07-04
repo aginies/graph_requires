@@ -5,8 +5,8 @@
 #!BuildTag: %%TAGPREFIX%%/demo:%%PKG_VERSION%%-%RELEASE%
 
 #FROM opensuse/tumbleweed
-ARG OS=opensuse/tumbleweed
-FROM ${OS}
+ARG OSREG=opensuse/tumbleweed
+FROM ${OSREG}
 
 # Mandatory labels for the build service:
 #   https://en.opensuse.org/Building_derived_containers

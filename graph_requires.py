@@ -45,6 +45,19 @@ def get_pretty_name() -> str:
     except FileNotFoundError:
         return "The file '/etc/os-release' does not exist."
 
+def get_version() -> str:
+    """
+    grab the version name
+    """
+    try:
+        with open('/etc/os-release', 'r') as file:
+            for line in file:
+                if line.startswith('VERSION='):
+                    version = line.strip().split('=', 1)[1].strip('"')
+                    return version
+    except FileNotFoundError:
+        return "The file '/etc/os-release' does not exist."
+
 def get_package_dependencies(package, depth=0, seen_packages=None):
     """
     Retrieve the list of package dependencies
@@ -163,7 +176,8 @@ def generate_image(filename="dependencies", extension="jpg", directory="/tmp/gra
     the py graphviz package in not available on SLES for py3.6
     so keeping it by command line
     """
-    image_filename = directory+"/" + filename + "." + extension
+    version = get_version()
+    image_filename = directory+"/"+filename+"_"+version+"."+extension
     try:
         command = ["dot", "-T"+extension, directory+"/"+filename+".dot", "-o", image_filename]
         result = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
