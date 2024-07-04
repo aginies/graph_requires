@@ -33,9 +33,9 @@ RUN mkdir /tmp/graph
 COPY graph_requires.py /container
 RUN chmod +x /container/graph_requires.py
 
+ARG GRAPHVIZGD=graphviz-gd
 RUN zypper install --no-recommends -y \
-	graphviz \
-	graphviz-gd \
+	graphviz ${GRAPHVIZGD} \
 	python3-base \
   && zypper clean --all
 

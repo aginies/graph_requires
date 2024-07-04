@@ -1,7 +1,7 @@
 # Goal
 
-Generate a graph of all packages that require any of the provides of a package (SUSE/openSUSE).
-This use zypper on current system, so its using the actual Repositories set on the system.
+Generate a **graph** of all packages that require any of the provides of a package (SUSE/openSUSE).
+This use **zypper** on current system, so its using the actual Repositories set on the system.
 If you are using some extra repository this can report false result compare to an '''official''' installation.
 To avoid any false result it is recommended to use the container way.
 
@@ -62,7 +62,10 @@ Build the container:
 1. openSUSE Leap 15.5
 2. openSUSE Leap 15.6
 3. openSUSE Tumbleweed
-Enter your OS choice [1-3]: 2
+4. SUSE SLES 15SP5"
+5. SUSE SLES 15SP6"
+
+Enter your OS choice [1-5]: 2
 STEP 1/23: FROM opensuse/leap:15.6
 STEP 2/23: LABEL Description="Graph requires Container"
 ..............
@@ -86,6 +89,10 @@ check deps of xen-tools
 DOT file '/tmp/graph/qemu.dot' generated successfully.
 Image file '/tmp/graph/qemu.jpg' generated successfully.
 ```
+
+# Limit
+
+If you try to graph what requires glibc... don't expect any result soon, this can be very slow to render...
 
 # Licence
 

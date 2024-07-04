@@ -9,6 +9,7 @@ function check_command() {
     fi
 }
 
+# place to store result (default path of graph_requires.py script)
 DATA=/tmp/graph
 
 run_container() {
@@ -26,10 +27,13 @@ build_container() {
 echo "1. openSUSE Leap 15.5"
 echo "2. openSUSE Leap 15.6"
 echo "3. openSUSE Tumbleweed"
-#echo "4. SUSE SLES 15SP5"
-#echo "5. SUSE SLES 15SP6"
-
+echo "4. SUSE SLES 15SP5"
+echo "5. SUSE SLES 15SP6"
+echo
+echo "Note: for SLES you need to have graphviz-gd installed on your system to render the dot file"
+echo
 read -p "Enter your OS choice [1-5]: " choice
+export ${choice}
 
 if ! [[ "$choice" =~ ^[0-9]+$ ]]; then
     echo "Invalid input. Please enter a number."
@@ -48,9 +52,13 @@ case $choice in
 	;;
 	4)
 	OS="bci/bci-base:15.5"
+	GRAPHVIZGD=""
+	check_command dot
 	;;
 	5)
 	OS="bci/bci-base:15.6"
+	GRAPHVIZGD=""
+	check_command dot
 	;;
 	*)
         echo "Invalid choice. Please enter a correct number..."
@@ -60,6 +68,7 @@ esac
 
 podman build \
        	--build-arg="OS=${OS}" \
+	--build-arg="GRAPHVIZGD=${GRAPHVIZGD}" \
 	--tag graph-${OS} .
 }
 
@@ -95,12 +104,17 @@ rmcache
 check_command podman
 
 plop=$1
-case $plop in
+case ${plop} in
     run)
 	podman images | grep graph
 	read -p "Enter the container ID: " containerid
 	read -p "Enter the package name: " PACKAGE
 	run_container ${containerid} ${PACKAGE}
+	# if this a SLES, jpg can not be generated, fixing this locally
+	if [ ! -e "${DATA}/${PACKAGE}.jpg" ]; then
+		echo "Generating image ${DATA}/${PACKAGE}.jpg locally"
+		dot -Tjpg ${DATA}/${PACKAGE}.dot -o ${DATA}/${PACKAGE}.jpg
+	fi
     ;;
     rmcache)
 	podman images | grep graph
