@@ -24,7 +24,7 @@ fi
 }
 
 check_sles() {
-# graphivz needs to be installed on current system
+# graphviz needs to be installed on current system
 check_command dot
 # Credentials is required to get access to all repositories on SLES
 check_readable /etc/zypp/credentials.d/SCCcredentials
@@ -52,7 +52,6 @@ echo
 echo "Note: for SLES you need to have graphviz-gd installed on your system to render the dot file"
 echo
 read -p "Enter your OS choice [1-5]: " choice
-export ${choice}
 
 if ! [[ "$choice" =~ ^[0-9]+$ ]]; then
     echo "Invalid input. Please enter a number."
@@ -62,21 +61,24 @@ fi
 case $choice in
 	1)
 	OS="opensuse/leap:15.5"
+	PACKAGETOI="graphviz-gd"
 	;;
 	2)
 	OS="opensuse/leap:15.6"
+	PACKAGETOI="graphviz-gd"
 	;;
 	3)
 	OS="opensuse/tumbleweed"
+	PACKAGETOI="graphviz-gd"
 	;;
 	4)
 	OS="bci/bci-base:15.5"
-	GRAPHVIZGD=""
+	PACKAGETOI="suseconnect-ng"
 	check_sles
 	;;
 	5)
 	OS="bci/bci-base:15.6"
-	GRAPHVIZGD=""
+	PACKAGETOI="suseconnect-ng"
 	check_sles
 	;;
 	*)
@@ -87,7 +89,7 @@ esac
 
 podman build \
        	--build-arg="OS=${OS}" \
-	--build-arg="GRAPHVIZGD=${GRAPHVIZGD}" \
+	--build-arg="PACKAGETOI=${PACKAGETOI}" \
 	--tag graph-${OS} .
 }
 

@@ -12,6 +12,8 @@ To be able to access all repositories you need an SCC credentials, and the conta
 setfacl -m u:aginies:r /etc/zypp/credentials.d/SCCcredentials
 ```
 
+About SCC and credentials, look at the online documentation at https://scc.suse.com/docs/userguide
+
 # Usage
 
 First clone this repo:

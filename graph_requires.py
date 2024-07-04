@@ -57,7 +57,7 @@ def get_package_dependencies(package, depth=0, seen_packages=None):
         return []
 
     try:
-        command = ["zypper", "-q", "-x", "search", "--requires-pkg", package]
+        command = ["zypper", "-v", "-q", "-x", "search", "--requires-pkg", package]
         result = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         output, _error = result.communicate()
 
@@ -203,6 +203,8 @@ if __name__ == "__main__":
         exit(1)
 
     print(f"Working with package {PACKAGE_NAME}")
+#    COMMAND = ["zypper", "-v", "ref"]
+#    subprocess.Popen(COMMAND, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     DEPENDENCIES_ALL = get_package_dependencies(PACKAGE_NAME)
 
     if DEPENDENCIES_ALL:

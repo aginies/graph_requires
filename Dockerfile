@@ -14,8 +14,8 @@ FROM ${OS}
 LABEL Description="Graph requires Container"
 LABEL maintainer="Antoine Ginies <aginies@suse.com>"
 
-LABEL org.opencontainers.image.title="graph container"
-LABEL org.opencontainers.image.description="Container for graph requires"
+LABEL org.opencontainers.image.title="Graph Requires Container"
+LABEL org.opencontainers.image.description="Container for Graph Requires"
 LABEL org.opencontainers.image.created="%BUILDTIME%"
 LABEL org.opencontainers.image.version="%%PKG_VERSION%%.%RELEASE%"
 LABEL org.opencontainers.image.url="https://build.opensuse.org/package/show/home:aginies:branches:openSUSE:Templates:Images:Tumbleweed/graph-container"
@@ -29,15 +29,18 @@ LABEL com.suse.release-stage="prototype"
 # endlabelprefix
 
 RUN mkdir /container
-RUN mkdir /tmp/graph
 COPY graph_requires.py /container
 RUN chmod +x /container/graph_requires.py
 
-ARG GRAPHVIZGD=graphviz-gd
+# list all repo
+RUN zypper lr
+ARG PACKAGETOI=graphviz-gd
+# install needed packages
 RUN zypper install --no-recommends -y \
-	graphviz ${GRAPHVIZGD} \
+	graphviz ${PACKAGETOI} \
 	python3-base \
-  && zypper clean --all
+	; exit 0 \
+	&& zypper clean --all
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
