@@ -2,6 +2,9 @@
 # aginies@suse.com
 # quick script to manage/use the container
 
+# place to store result (default path of graph_requires.py script)
+DATA=/tmp/graph
+
 function check_command() {
     if ! command -v "$1" &> /dev/null; then
         echo "Error: $1 is not installed or not in your PATH."
@@ -9,8 +12,23 @@ function check_command() {
     fi
 }
 
-# place to store result (default path of graph_requires.py script)
-DATA=/tmp/graph
+check_readable() {
+FILE=$1
+if [ -r "$FILE" ]; then
+    echo "${FILE} is readable"
+else
+    echo "${FILE} is not readable"
+    echo "As root do:"
+    echo "setfacl -m u:${USER}:r ${FILE}"
+fi
+}
+
+check_sles() {
+# graphivz needs to be installed on current system
+check_command dot
+# Credentials is required to get access to all repositories on SLES
+check_readable /etc/zypp/credentials.d/SCCcredentials
+}
 
 run_container() {
 containerid=$1
@@ -19,6 +37,7 @@ mkdir ${DATA}
 podman run \
     --name graph \
     --rm -ti \
+    -v /etc/zypp/credentials.d/SCCcredentials:/etc/zypp/credentials.d/SCCcredentials \
     --volume ${DATA}:${DATA} \
     ${containerid} ${PACKAGE}
 }
@@ -53,12 +72,12 @@ case $choice in
 	4)
 	OS="bci/bci-base:15.5"
 	GRAPHVIZGD=""
-	check_command dot
+	check_sles
 	;;
 	5)
 	OS="bci/bci-base:15.6"
 	GRAPHVIZGD=""
-	check_command dot
+	check_sles
 	;;
 	*)
         echo "Invalid choice. Please enter a correct number..."

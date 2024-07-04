@@ -5,6 +5,13 @@ This use **zypper** on current system, so its using the actual Repositories set 
 If you are using some extra repository this can report false result compare to an '''official''' installation.
 To avoid any false result it is recommended to use the container way.
 
+# SUSE SLES case
+
+To be able to access all repositories you need an SCC credentials, and the container requires a writable file, and as use there is some limitation, so you need as root to change the ACL on the file:
+```shell
+setfacl -m u:aginies:r /etc/zypp/credentials.d/SCCcredentials
+```
+
 # Usage
 
 First clone this repo:
