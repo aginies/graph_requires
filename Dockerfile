@@ -34,12 +34,13 @@ RUN chmod +x /container/graph_requires.py
 
 # list all repo
 RUN zypper lr
+RUN zypper --gpg-auto-import-keys ref
 ARG PACKAGETOI=graphviz-gd
 # install needed packages
+ENV ADDITIONAL_MODULES sle-module-desktop-applications,sle-module-development-tools,sle-module-server-applications,sle-module-container
 RUN zypper install --no-recommends -y \
 	graphviz ${PACKAGETOI} \
 	python3-base \
-	; exit 0 \
 	&& zypper clean --all
 
 COPY entrypoint.sh /entrypoint.sh
