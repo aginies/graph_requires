@@ -57,7 +57,7 @@ def get_package_dependencies(package, depth=0, seen_packages=None):
         return []
 
     try:
-        command = ["zypper", "-v", "-q", "-x", "search", "--requires-pkg", package]
+        command = ["zypper", "-q", "-x", "search", "--requires-pkg", package]
         result = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         output, _error = result.communicate()
 
