@@ -12,14 +12,25 @@ function check_command() {
     fi
 }
 
-check_readable() {
+
+show_info() {
 FILE=$1
-if [ -r "$FILE" ]; then
-    echo "${FILE} is readable"
-else
     echo "${FILE} is not readable"
     echo "As root do:"
     echo "setfacl -m u:${USER}:r ${FILE}"
+}
+
+check_readable() {
+FILE=$1
+if [ -r "${FILE}" ]; then
+    echo "${FILE} is readable"
+elif [[ ! -f "${FILE}" ]]; then
+    echo "${FILE} is not present or readable by user"
+    show_info ${FILE}
+    exit 1
+else
+    show_info ${FILE}
+    exit 1
 fi
 }
 
@@ -134,15 +145,16 @@ case ${plop} in
     run)
 	podman images | grep graph
 	read -p "Enter the container ID: " containerid
-	read -p "Enter the package name (separated by comma): " PACKAGE
-	run_container ${containerid} ${PACKAGE}
+	read -p "Enter the package name (separated by comma): " PACKAGES
+	run_container ${containerid} ${PACKAGES}
 	# if this a SLES, jpg can not be generated, fixing this locally
 	OS=`podman images | awk -v id="${containerid}" 'NR>1 && $3==id { split($1, parts, "/"); repo_name = parts[length(parts)]; print repo_name; exit }'`
-	if [ ! -e "${DATA}/${PACKAGE}.jpg" ]; then
-		echo "Generating image ${DATA}/${PACKAGE}_${OS}.jpg locally"
-		dot -Tjpg ${DATA}/${PACKAGE}.dot -o ${DATA}/${PACKAGE}_${OS}.jpg
+	PACKAGESM=${PACKAGES//,/_)}
+	if [ ! -e "${DATA}/${PACKAGESM}.jpg" ]; then
+		echo "Generating image ${DATA}/${PACKAGESM}_${OS}.jpg locally"
+		dot -Tjpg ${DATA}/${PACKAGESM}.dot -o ${DATA}/${PACKAGESM}_${OS}.jpg
 	else
-		echo "${DATA}/${PACKAGE}_${OS}.jpg already exist.... exiting"
+		echo "${DATA}/${PACKAGESM}_${OS}.jpg already exist.... exiting"
 	fi
     ;;
     rmcache)
