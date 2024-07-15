@@ -25,7 +25,7 @@ Switch the script to executable and use it on your system:
 ```shell
 cd graph_requires
 chmod 755 graph_requires.py
-./graph_requires.py PACKAGE_NAME [OPTIONNAL_DIRECTORY]
+./graph_requires.py PACKAGE_NAME,PKG2,PKG3 [OPTIONNAL_DIRECTORY]
 ```
 
 # Example
