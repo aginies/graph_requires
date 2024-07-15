@@ -183,8 +183,8 @@ def generate_dot_file(deps, package_n, filename, directory="/tmp/graph"):
                                 with open(fileb, "a") as dotf:
                                     dotf.write(f'"{dep_package}" -> "{package}" [color=blue, style=dotted];\n')
                                 dotf.close()
-    else:
-        print(f"{deps} is neither a dictionary nor a list.")
+    #else:
+    #    print(f"{deps} is neither a dictionary nor a list.")
 
 def remove_suffix(text, suffix):
     """
