@@ -236,9 +236,8 @@ if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Usage: python3 graph.py PACKAGE_NAME,PACKAGE_NAME1,PACKAGE_NAME2 [OPTIONNAL_DIRECTORY]")
         sys.exit(1)
-    PACKAGE_NAME = sys.argv[1].strip()
-    PACKAGE_NAMES = sys.argv[1].strip().split(",")
-    PACKAGE_NAMES = [pkg.strip() for pkg in PACKAGE_NAMES]
+    PACKAGE_N = sys.argv[1].strip().split(",")
+    PACKAGE_NAMES = [pkg.strip() for pkg in PACKAGE_N]
 
     if len(sys.argv) > 2:
         WDIR = sys.argv[2].strip()
@@ -247,7 +246,7 @@ if __name__ == "__main__":
     else:
         WDIR = "/tmp/graph"
 
-    if not PACKAGE_NAME:
+    if not PACKAGE_NAMES:
         print("Please enter a valid package name (or multiple separate by comma)")
         exit(1)
 
@@ -258,8 +257,8 @@ if __name__ == "__main__":
         print(f"Working with package {pkg}")
         DEPENDENCIES_PKG = get_package_dependencies(pkg)
         print(f"Generating {pkg} dot file")
-        generate_dot_file(DEPENDENCIES_PKG, pkg, pkg+".dot", directory=WDIR)
-        ALL_DOT_FILES_LIST.append(WDIR+"/"+pkg+".dot")
+        generate_dot_file(DEPENDENCIES_PKG, pkg, pkg+"_tmp.dot", directory=WDIR)
+        ALL_DOT_FILES_LIST.append(WDIR+"/"+pkg+"_tmp.dot")
         #DEPENDENCIES_ALL.update(DEPENDENCIES_PKG)
 
     # generate dot files for each packages and merge content in one file
@@ -271,10 +270,10 @@ if __name__ == "__main__":
                     file_contents = file.read()
                     merged.write(file_contents)
         merged.close()
-    # clean up removing pkg dot file
-    for file_path in ALL_DOT_FILES_LIST:
-        os.remove(file_path)
 
     close_dot(RESULT+".dot", directory=WDIR)
     # generate the image
     generate_image(filename=RESULT, extension="jpg", directory=WDIR)
+    # clean up removing pkg dot file
+    for file_path in ALL_DOT_FILES_LIST:
+        os.remove(file_path)
