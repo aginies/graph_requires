@@ -166,7 +166,7 @@ def generate_dot_file(deps, package_n, filename, directory="/tmp/graph"):
                     if package_n == package:
                         # first level of requires
                         with open(fileb, "a") as dotf:
-                            dotf.write(f'"{dep_package}" -> "{package}" [color=red];\n')
+                            dotf.write(f'"{dep_package}" -> "{package}" [color=red, style=dotted];\n')
                         dotf.close()
                     else:
                         # second level of requires so graph as an ellipse
@@ -176,11 +176,11 @@ def generate_dot_file(deps, package_n, filename, directory="/tmp/graph"):
                         pattern = "\"" + package + "\"" + " -> " + "\"" + package_n + "\""
                         if check_seen_before(fileb, pattern) is False:
                             with open(fileb, "a") as dotf:
-                                dotf.write(f'"{dep_package}" -> "{package}" -> "{package_n}" [color=blue];\n')
+                                dotf.write(f'"{dep_package}" -> "{package}" -> "{package_n}" [color=green, color=red, style=dotted];\n')
                             dotf.close()
                         else:
                             with open(fileb, "a") as dotf:
-                                dotf.write(f'"{dep_package}" -> "{package}" [color=red];\n')
+                                dotf.write(f'"{dep_package}" -> "{package}" [color=blue, style=dotted];\n')
                             dotf.close()
 
 def remove_suffix(text, suffix):
