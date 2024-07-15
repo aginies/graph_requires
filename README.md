@@ -103,6 +103,11 @@ Image file '/tmp/graph/qemu.jpg' generated successfully.
 
 If you try to graph what requires glibc... don't expect any result soon, this can be very slow to render...
 
+# TODO
+
+* fix limit filename size
+* avoid redundant loop in graph
+
 # Licence
 
 GPL V3
