@@ -85,7 +85,7 @@ Use it:
 ./graph-container-manage.sh run
 localhost/graph-opensuse/leap        15.6        0e77c8ce4c3d  12 minutes ago  204 MB
 Enter the container ID: 0e77c8ce4c3d
-Enter the package name: qemu
+Enter the package name (separated by comma): qemu
 
 Generate a graph of all packages that require any of the provides of a package.
 This use zypper on current system, so using the actual Repositories set on the system.

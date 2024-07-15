@@ -134,7 +134,7 @@ case ${plop} in
     run)
 	podman images | grep graph
 	read -p "Enter the container ID: " containerid
-	read -p "Enter the package name: " PACKAGE
+	read -p "Enter the package name (separated by comma): " PACKAGE
 	run_container ${containerid} ${PACKAGE}
 	# if this a SLES, jpg can not be generated, fixing this locally
 	OS=`podman images | awk -v id="${containerid}" 'NR>1 && $3==id { split($1, parts, "/"); repo_name = parts[length(parts)]; print repo_name; exit }'`
