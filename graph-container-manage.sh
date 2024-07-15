@@ -149,7 +149,7 @@ case ${plop} in
 	run_container ${containerid} ${PACKAGES}
 	# if this a SLES, jpg can not be generated, fixing this locally
 	OS=`podman images | awk -v id="${containerid}" 'NR>1 && $3==id { split($1, parts, "/"); repo_name = parts[length(parts)]; print repo_name; exit }'`
-	PACKAGESM=${PACKAGES//,/_)}
+	PACKAGESM=${PACKAGES//,/_}
 	if [ ! -e "${DATA}/${PACKAGESM}.jpg" ]; then
 		echo "Generating image ${DATA}/${PACKAGESM}_${OS}.jpg locally"
 		dot -Tjpg ${DATA}/${PACKAGESM}.dot -o ${DATA}/${PACKAGESM}_${OS}.jpg
