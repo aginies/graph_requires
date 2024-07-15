@@ -254,6 +254,12 @@ if __name__ == "__main__":
         exit(1)
 
     RESULT = '_'.join(PACKAGE_NAMES)
+    # limit name to 64 characters...
+    max_length = 64
+    if len(RESULT) > max_length:
+        RESULT = RESULT[:max_length]
+        print("Name limited to 64 characters.")
+
     ALL_DOT_FILES_LIST = []
     # calculate deps and generates dict
     for pkg in PACKAGE_NAMES:
