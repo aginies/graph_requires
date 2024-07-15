@@ -151,8 +151,8 @@ case ${plop} in
 	OS=`podman images | awk -v id="${containerid}" 'NR>1 && $3==id { split($1, parts, "/"); repo_name = parts[length(parts)]; print repo_name; exit }'`
 	PACKAGESM=${PACKAGES//,/_}
 	max_length=64
-	if [ ${#PACKAGE} -gt $max_length ]; then
-    		PACKAGE="${PACKAGE:0:max_length}"
+	if [ ${#PACKAGEM} -gt $max_length ]; then
+		PACKAGEM="${PACKAGEM:0:max_length}"
 		echo "Name truncated to 64 characters"
 	fi
 	if [ ! -e "${DATA}/${PACKAGESM}.jpg" ]; then
