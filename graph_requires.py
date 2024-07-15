@@ -159,29 +159,32 @@ def generate_dot_file(deps, package_n, filename, directory="/tmp/graph"):
     """
     fileb = directory +"/"+ filename
 
-    for package, requires_pkg in deps.items():
-        if isinstance(requires_pkg, dict):
-            if requires_pkg:
-                for dep_package in requires_pkg:
-                    if package_n == package:
-                        # first level of requires
-                        with open(fileb, "a") as dotf:
-                            dotf.write(f'"{dep_package}" -> "{package}" [color=red, style=dotted];\n')
-                        dotf.close()
-                    else:
-                        # second level of requires so graph as an ellipse
-                        with open(fileb, "a") as dotf:
-                            dotf.write(f"\"{dep_package}\" [shape=ellipse, style=filled, fillcolor=pink];\n")
-                        dotf.close()
-                        pattern = "\"" + package + "\"" + " -> " + "\"" + package_n + "\""
-                        if check_seen_before(fileb, pattern) is False:
+    if isinstance(deps, dict):
+        for package, requires_pkg in deps.items():
+            if isinstance(requires_pkg, dict):
+                if requires_pkg:
+                    for dep_package in requires_pkg:
+                        if package_n == package:
+                            # first level of requires
                             with open(fileb, "a") as dotf:
-                                dotf.write(f'"{dep_package}" -> "{package}" -> "{package_n}" [color=green, color=red, style=dotted];\n')
+                                dotf.write(f'"{dep_package}" -> "{package}" [color=red, style=dotted];\n')
                             dotf.close()
                         else:
+                            # second level of requires so graph as an ellipse
                             with open(fileb, "a") as dotf:
-                                dotf.write(f'"{dep_package}" -> "{package}" [color=blue, style=dotted];\n')
+                                dotf.write(f"\"{dep_package}\" [shape=ellipse, style=filled, fillcolor=pink];\n")
                             dotf.close()
+                            pattern = "\"" + package + "\"" + " -> " + "\"" + package_n + "\""
+                            if check_seen_before(fileb, pattern) is False:
+                                with open(fileb, "a") as dotf:
+                                    dotf.write(f'"{dep_package}" -> "{package}" -> "{package_n}" [color=green, color=red, style=dotted];\n')
+                                dotf.close()
+                            else:
+                                with open(fileb, "a") as dotf:
+                                    dotf.write(f'"{dep_package}" -> "{package}" [color=blue, style=dotted];\n')
+                                dotf.close()
+    else:
+        print(f"{deps} is neither a dictionary nor a list.")
 
 def remove_suffix(text, suffix):
     """
@@ -258,8 +261,8 @@ if __name__ == "__main__":
         DEPENDENCIES_PKG = get_package_dependencies(pkg)
         print(f"Generating {pkg} dot file")
         generate_dot_file(DEPENDENCIES_PKG, pkg, pkg+"_tmp.dot", directory=WDIR)
-        ALL_DOT_FILES_LIST.append(WDIR+"/"+pkg+"_tmp.dot")
-        #DEPENDENCIES_ALL.update(DEPENDENCIES_PKG)
+        if os.path.exists(WDIR+"/"+pkg+"_tmp.dot"):
+            ALL_DOT_FILES_LIST.append(WDIR+"/"+pkg+"_tmp.dot")
 
     # generate dot files for each packages and merge content in one file
     pre_dot(RESULT, RESULT+".dot", directory=WDIR)
