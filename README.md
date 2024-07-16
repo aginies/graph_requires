@@ -31,35 +31,31 @@ chmod 755 graph_requires.py
 # Example
 
 ```shell
-./graph_requires.py qemu-tools
+./graph_requires.py qemu
 
 Generate a graph of packages which requires another one.
 This use zypper on current system, so using the actual Repositories set on this system.
 
-check deps of diskimage-builder
-check deps of infos-creator-rpm
-check deps of kiwi-systemdeps-filesystems
-check deps of kiwi-image-oem-requires
-check deps of kiwi-image-pxe-requires
-check deps of kiwi-image-vmx-requires
-check deps of kiwi-systemdeps
-check deps of kiwi-systemdeps-disk-images
-check deps of kiwi-systemdeps-iso-media
-check deps of libguestfs-appliance
-check deps of libguestfs
-check deps of live-fat-stick
-check deps of live-usb-gui
-check deps of live-grub-stick
-check deps of os-autoinst-devel
-check deps of openQA-devel
-check deps of os-autoinst-qemu-kvm
-check deps of os-autoinst-qemu-x86
-check deps of qemu-tools
-DOT file '/tmp/graph/qemu-tools.dot' generated successfully.
-Image file '/tmp/graph/qemu-tools.jpg' generated successfully.
+Working with package qemu
+check deps of docker-img-store-setup
+check deps of patterns-public-cloud-15-Amazon-Web-Services-Instance-Tools
+check deps of patterns-public-cloud-15-Google-Cloud-Platform
+...
+check deps of libvirt-daemon-config-network
+check deps of libvirt-daemon-config-nwfilter
+check deps of libvirt-daemon-driver-interface
+check deps of libvirt-daemon-driver-libxl
+...
+check deps of qemu-ui-gtk
+check deps of qemu-ui-spice-app
+check deps of qemu-ui-spice-core
+check deps of qemu-x86
+check deps of xen-tools
+DOT file '/tmp/graph/qemu.dot' generated successfully.
+Image file '/tmp/graph/qemu_graph-sles15-sp6.jpg' generated successfully.
 ```
 
-![image](https://github.com/aginies/graph_requires/blob/db7ab2f046a0b4a966aa255abc7173f7fc919df2/examples/qemu_libvirt_spice_graph-sles15-sp6.jpg)
+![image](https://github.com/aginies/graph_requires/blob/9c633963000ea28d850241e8c8e292d931a9c2de/examples/qemu_graph-sles15-sp6.jpg)
 
 # Container
 
@@ -104,6 +100,8 @@ DOT file '/tmp/graph/qemu_libvirt.dot' generated successfully.
 Image file '/tmp/graph/qemu_libvirt_15-SP6.jpg' generated successfully.
 Generating image /tmp/graph/qemu_libvirt_graph-sles15-sp6.jpg locally
 ```
+
+![image](https://github.com/aginies/graph_requires/blob/db7ab2f046a0b4a966aa255abc7173f7fc919df2/examples/qemu_libvirt_spice_graph-sles15-sp6.jpg)
 
 # Limit
 
