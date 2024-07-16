@@ -1,7 +1,7 @@
 # Goal
 
-Generate a **graph** of all packages that require any of the provides of a package (SUSE/openSUSE).
-This use **zypper** on current system, so its using the actual Repositories set on the system.
+Generate a **graph** of all packages that require any of the provides of a package for SUSE and openSUSE).
+This use **zypper** with **--requires-pkg** option on current system, so its using the actual Repositories set on the system.
 If you are using some extra repository this can report false result compare to an '''official''' installation.
 To avoid any false result it is recommended to use the container way.
 
@@ -59,7 +59,7 @@ DOT file '/tmp/graph/qemu-tools.dot' generated successfully.
 Image file '/tmp/graph/qemu-tools.jpg' generated successfully.
 ```
 
-![image](https://github.com/aginies/graph_requires/blob/343637c8f144036901b734c2c323a2945dd674c5/examples/qemu-tools.jpg)
+![image](https://github.com/aginies/graph_requires/blob/db7ab2f046a0b4a966aa255abc7173f7fc919df2/examples/qemu_libvirt_spice_graph-sles15-sp6.jpg)
 
 # Container
 
@@ -71,8 +71,8 @@ Build the container:
 1. openSUSE Leap 15.5
 2. openSUSE Leap 15.6
 3. openSUSE Tumbleweed
-4. SUSE SLES 15SP5"
-5. SUSE SLES 15SP6"
+4. SUSE SLES 15SP5
+5. SUSE SLES 15SP6
 
 Enter your OS choice [1-5]: 2
 STEP 1/23: FROM opensuse/leap:15.6
@@ -83,20 +83,26 @@ STEP 2/23: LABEL Description="Graph requires Container"
 Use it:
 ```shell
 ./graph-container-manage.sh run
-localhost/graph-opensuse/leap        15.6        0e77c8ce4c3d  12 minutes ago  204 MB
-Enter the container ID: 0e77c8ce4c3d
-Enter the package name (separated by comma): qemu
+./graph-container-manage.sh run
+localhost/graph-sles15-sp6      latest      7f7bfcf697fc  3 seconds ago  223 MB
+Enter the container ID: 7f7bfcf697fc
+Enter the package name (separated by comma): qemu,libvirt
 
 Generate a graph of all packages that require any of the provides of a package.
 This use zypper on current system, so using the actual Repositories set on the system.
-check deps of diskimage-builder
+
+Working with package qemu
 check deps of docker-img-store-setup
-check deps of gnome-boxes
-check deps of gnome-boxes-lang
+check deps of patterns-public-cloud-15-Amazon-Web-Services-Instance-Tools
+check deps of patterns-public-cloud-15-Google-Cloud-Platform
 .....
-check deps of xen-tools
-DOT file '/tmp/graph/qemu.dot' generated successfully.
-Image file '/tmp/graph/qemu.jpg' generated successfully.
+check deps of virt-top
+check deps of virt-viewer
+check deps of virtual-host-gatherer-Libvirt
+Generating libvirt dot file
+DOT file '/tmp/graph/qemu_libvirt.dot' generated successfully.
+Image file '/tmp/graph/qemu_libvirt_15-SP6.jpg' generated successfully.
+Generating image /tmp/graph/qemu_libvirt_graph-sles15-sp6.jpg locally
 ```
 
 # Limit
