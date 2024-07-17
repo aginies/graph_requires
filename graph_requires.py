@@ -117,11 +117,11 @@ def check_seen_before(filename, pattern):
             for line in file:
                 line_number += 1
                 if pattern in line:
-                    #print(f"{pattern} found in line {line_number}: {line.strip()}")
+                    print(f"{pattern} found in line {line_number}: {line.strip()}")
                     found = True
                     return True
             if not found:
-                #print(f"{pattern} not found in the file.")
+                print(f"{pattern} not found in the file.")
                 return False
 
     except FileNotFoundError:
@@ -158,6 +158,9 @@ def generate_dot_file(deps, package_n, filename, directory="/tmp/graph"):
     Generate a DOT file from the package dependencies.
     """
     fileb = directory +"/"+ filename
+    with open(filename, 'w') as dotf:
+        pass
+    dotf.close()
 
     if isinstance(deps, dict):
         for package, requires_pkg in deps.items():
@@ -171,9 +174,12 @@ def generate_dot_file(deps, package_n, filename, directory="/tmp/graph"):
                             dotf.close()
                         else:
                             # second level of requires so graph as an ellipse
-                            with open(fileb, "a") as dotf:
-                                dotf.write(f"\"{dep_package}\" [shape=ellipse, style=filled, fillcolor=pink];\n")
-                            dotf.close()
+                            pattern = '"'+dep_package+'"'+' [shape=ellipse' #, style=filled, fillcolor=pink];'
+                            if check_seen_before(fileb, pattern) is False:
+                                with open(fileb, "a") as dotf:
+                                    dotf.write(f"\"{dep_package}\" [shape=ellipse, style=filled, fillcolor=pink];\n")
+                                dotf.close()
+
                             pattern = "\"" + package + "\"" + " -> " + "\"" + package_n + "\""
                             if check_seen_before(fileb, pattern) is False:
                                 with open(fileb, "a") as dotf:
@@ -265,7 +271,7 @@ if __name__ == "__main__":
     for pkg in PACKAGE_NAMES:
         print(f"Working with package {pkg}")
         DEPENDENCIES_PKG = get_package_dependencies(pkg)
-        print(f"Generating {pkg} dot file")
+        print(f"Generating {WDIR}/{pkg}.dot file")
         generate_dot_file(DEPENDENCIES_PKG, pkg, pkg+"_tmp.dot", directory=WDIR)
         if os.path.exists(WDIR+"/"+pkg+"_tmp.dot"):
             ALL_DOT_FILES_LIST.append(WDIR+"/"+pkg+"_tmp.dot")
