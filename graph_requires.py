@@ -121,7 +121,7 @@ def check_seen_before(filename, pattern):
                     found = True
                     return True
             if not found:
-                print(f"{pattern} not found in the file.")
+                print(f"{pattern} not found in the file {filename}.")
                 return False
 
     except FileNotFoundError:
@@ -158,7 +158,7 @@ def generate_dot_file(deps, package_n, filename, directory="/tmp/graph"):
     Generate a DOT file from the package dependencies.
     """
     fileb = directory +"/"+ filename
-    with open(filename, 'w') as dotf:
+    with open(fileb, 'w') as dotf:
         pass
     dotf.close()
 
@@ -278,13 +278,12 @@ if __name__ == "__main__":
 
     # generate dot files for each packages and merge content in one file
     pre_dot(RESULT, RESULT+".dot", directory=WDIR)
-    for pkg in PACKAGE_NAMES:
-        with open(WDIR+"/"+RESULT+".dot", 'a') as merged:
-            for file_path in ALL_DOT_FILES_LIST:
-                with open(file_path, 'r') as file:
-                    file_contents = file.read()
-                    merged.write(file_contents)
-        merged.close()
+    with open(WDIR+"/"+RESULT+".dot", 'a') as merged:
+        for file_path in ALL_DOT_FILES_LIST:
+            with open(file_path, 'r') as file:
+                file_contents = file.read()
+                merged.write(file_contents)
+    merged.close()
 
     close_dot(RESULT+".dot", directory=WDIR)
     # generate the image
