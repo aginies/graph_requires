@@ -1,0 +1,8 @@
+# Python caches
+__pycache__/
+*.py[cod]
+
+# Local generated graph output (the tool's default output dir is /tmp/graph,
+# keep stray generated graphs/dot/html out of git; examples/ stays tracked)
+/out/
+test_debug_3d/
